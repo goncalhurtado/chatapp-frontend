@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState({
-    email: "",
-    password: "",
+    username: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
@@ -38,7 +37,7 @@ const Login = () => {
       setUser(response.data.data);
       navigate("/");
     } catch (error) {
-      console.error(error);
+      console.error(error.response.data.message);
       setError({
         status: true,
         message: error.response.data.message || "An error occurred",
@@ -52,23 +51,20 @@ const Login = () => {
       <h1>Login</h1>
       <form
         onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "60%",
+          margin: "auto",
+        }}
       >
         <input
           type="text"
-          name="email"
-          value={input.email}
+          name="username"
+          value={input.username}
           onChange={handleChange}
           style={{ marginBottom: "10px" }}
         />
-        <input
-          type="password"
-          name="password"
-          value={input.password}
-          onChange={handleChange}
-          //   style={{ marginBottom: "10px" }}
-        />
-
         <p style={{ height: 25 }}>{error.status && error.message}</p>
 
         <button disabled={loading} type="submit">
